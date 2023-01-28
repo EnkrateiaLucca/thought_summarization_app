@@ -28,8 +28,6 @@ On MacOS
 On Windows
 ```chco install ffmpeg```
 
----
-
 2. **Create the conda environment**
 
 ```conda create -n thought_summarizer python==3.8```
