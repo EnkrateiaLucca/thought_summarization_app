@@ -20,7 +20,7 @@ FORMAT = pyaudio.paInt16
 RATE = st.sidebar.number_input(label="Rate")
 CHUNK = st.sidebar.number_input(label="Chunk")
 THOUGHT_DELAY = st.sidebar.number_input(label="Thought Delay (s)")
-temp_audio_file_path = "./audo_sample.m4a"
+temp_audio_file_path = "./output.wav"
 
 if st.sidebar.button("Record Audio"):
     p = pyaudio.PyAudio()
