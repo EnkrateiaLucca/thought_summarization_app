@@ -2,7 +2,7 @@ import streamlit as st
 import whisper
 import pyaudio
 import wave
-import openai
+import openaip
 
 
 openai.api_key = "Your API KEY"

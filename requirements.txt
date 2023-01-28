@@ -1,0 +1,4 @@
+openai==0.25.0
+whisper
+streamlit==1.8.1
+pyaudio
