@@ -28,11 +28,13 @@ On MacOS
 On Windows
 ```chco install ffmpeg```
 
-1. **Create the conda environment**
+---
+
+2. **Create the conda environment**
 
 ```conda create -n thought_summarizer python==3.8```
 
-3. Install Python dependencies (pytorch, whisper, pyaudio)
+3. **Install Python dependencies (pytorch, whisper, pyaudio)**
 
 For installing pytorch, make sure that the cuda version is right for your machine,  see instructions [here](https://pytorch.org/). 
 
@@ -42,6 +44,8 @@ For installing pytorch, make sure that the cuda version is right for your machin
 Then install the remaining dependencies by running:
 
 ```pip install -r requirements.txt```
+
+---
 
 ## Running
 
