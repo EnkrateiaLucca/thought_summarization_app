@@ -1,11 +1,12 @@
+import os
 import streamlit as st
 import whisper
 import pyaudio
 import wave
-import openaip
+import openai
 
-
-openai.api_key = "Your API KEY"
+# get environment path variable OPENAI_API_KEY
+openai.api_key = os.environ["OPENAI_API_KEY"]
 st.title("Thought Summarization App")
 
 model = whisper.load_model("base")
@@ -15,11 +16,11 @@ st.write("Whisper Model Loaded!")
 # upload audio file with streamlit
 # audio_file = st.file_uploader("Upload Audio", type=["wav", "mp3", "m4a"])
 
-CHANNELS = st.sidebar.number_input(label="Channels")
+CHANNELS = int(st.sidebar.number_input(label="Channels"))
 FORMAT = pyaudio.paInt16
-RATE = st.sidebar.number_input(label="Rate")
-CHUNK = st.sidebar.number_input(label="Chunk")
-THOUGHT_DELAY = st.sidebar.number_input(label="Thought Delay (s)")
+RATE = int(st.sidebar.number_input(label="Rate"))
+CHUNK = int(st.sidebar.number_input(label="Chunk"))
+THOUGHT_DELAY = int(st.sidebar.number_input(label="Thought Delay (s)"))
 temp_audio_file_path = "./output.wav"
 
 if st.sidebar.button("Record Audio"):
@@ -35,7 +36,7 @@ if st.sidebar.button("Record Audio"):
         frames.append(data)
         
 
-    print("Recording stopped. Now starting transcription...")
+    print("Recording stopped. Writing audio file")
     stream.stop_stream()
     stream.close()
     p.terminate()
@@ -46,13 +47,19 @@ if st.sidebar.button("Record Audio"):
     wf.setframerate(RATE)
     wf.writeframes(b''.join(frames))
     wf.close()
+    st.write(f"Audio file written at: {temp_audio_file_path}")
+    
     
     
 if st.sidebar.button("Transcribe/Summarize Audio"):
+    st.write("Transcribing Audio...")
     result = model.transcribe(temp_audio_file_path)
     st.write("Thought Summaries:")
     text = result["text"]
+    st.write("Transcription finished, original text: ")
+    st.write(text)
     prompt = (f"summarize this text: {text}")
+    st.write("Summarizing...")
 
     # Get a response from GPT-3
     response = openai.Completion.create(
@@ -68,9 +75,8 @@ if st.sidebar.button("Transcribe/Summarize Audio"):
     summary = response.choices[0].text
 
     # Print the summary
+    st.write("Final Summary:")
     st.write(summary)
-
-    #st.write(result["text"])
     
     
 
